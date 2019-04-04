@@ -1,16 +1,22 @@
 let canvas = $('#c')[0]
 let ctx = canvas.getContext('2d')
-ctx.msImageSmoothingEnabled = false
-ctx.mozImageSmoothingEnabled = false
-ctx.webkitImageSmoothingEnabled = false
-ctx.imageSmoothingEnabled = false
 
-const pxWidth = 30
-const pxHeight = 30
-const scale = 20
-const fontSize = 10
-ctx.font = fontSize + 'px Arial'
-ctx.fillStyle = '#FFFFFF'
+let pxWidth = 30
+let pxHeight = 30
+let scale = 20
+let fontSize = 10
+let color_reduction_factor = 75
+
+function initCanvas() {
+    canvas.width = pxWidth * scale
+    canvas.height = pxHeight * scale
+    ctx.msImageSmoothingEnabled = false
+    ctx.mozImageSmoothingEnabled = false
+    ctx.webkitImageSmoothingEnabled = false
+    ctx.imageSmoothingEnabled = false
+    ctx.font = fontSize + 'px Arial'
+    ctx.fillStyle = '#FFFFFF'
+}
 
 function reduce(val, factor) {
     return val - val % factor
@@ -30,11 +36,12 @@ function reduceColors(context, width, height, factor) {
 
 let img = new Image()
 img.onload = () => {
+    initCanvas()
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.drawImage(img, 0, 0, img.width, img.height,
                        0, 0, pxWidth, pxHeight)
     
-    reduceColors(ctx, pxWidth, pxHeight, 75)
+    reduceColors(ctx, pxWidth, pxHeight, color_reduction_factor)
     
     ctx.drawImage(canvas, 0, 0, pxWidth, pxHeight,
                           0, 0, pxWidth * scale, pxHeight * scale)
@@ -67,3 +74,22 @@ $("#in").change(() => {
 })
 
 $("#hide_nums").change(() => img.onload())
+
+$("#px_width").on('input', () => {
+    pxWidth = $("#px_width").val()
+    $("#px_width_output").text(pxWidth)
+    img.onload()
+})
+
+$("#px_height").on('input', () => {
+    pxHeight = $("#px_height").val()
+    $("#px_height_output").text(pxHeight)
+    img.onload()
+})
+
+$("#color_depth").on('input', () => {
+    color_depth = $("#color_depth").val()
+    $("#color_depth_output").text(color_depth)
+    color_reduction_factor = 101 - color_depth
+    img.onload()
+})
