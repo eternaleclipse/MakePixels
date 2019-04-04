@@ -3,10 +3,16 @@
         <title>MakePixels</title>
     </head>
     <body>
-        <input id="in" type="file" />
-        <input id="hide_nums" type="checkbox" />
-        <label for="hide_nums">Hide Numbers</label><br />
-        <canvas id="c" width="600" height="600" style="border: 1px black solid" />
+        <input id="in" type="file" /><br />
+        <label for="hide_nums">Hide Numbers?</label>
+        <input id="hide_nums" type="checkbox" /><br />
+        Width: <input id="px_width" type="range" min="4" max="100" value="30" />
+        <output id="px_width_output">30</output><br />
+        Height: <input id="px_height" type="range" min="4" max="100" value="30" />
+        <output id="px_height_output">30</output><br />
+        Color Depth: <input id="color_depth" type="range" min="1" max="100" value="25" />
+        <output id="color_depth_output">25</output><br />
+        <canvas id="c" width="600" height="600" style="border: 1px black solid" /><br />
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript" src="index.js"></script>
     </body>
